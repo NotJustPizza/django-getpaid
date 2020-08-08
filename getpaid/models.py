@@ -548,8 +548,3 @@ class AbstractPayment(ConcurrentTransitionMixin, models.Model):
     @transition(field=fraud_status, source=fs.CHECK, target=fs.ACCEPTED)
     def mark_as_legit(self, message: str = "", **kwargs) -> None:
         self.fraud_message += f"\n==MANUAL ACCEPT==\n{message}"
-
-
-class Payment(AbstractPayment):
-    class Meta(AbstractPayment.Meta):
-        swappable = swapper.swappable_setting("getpaid", "Payment")
